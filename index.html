@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Controle de Estoque - Garagem</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Controle de Estoque</h1>
+  </header>
+  <main>
+    <section>
+      <h2>Itens</h2>
+      <button onclick="loadItems()">Carregar Itens</button>
+      <ul id="items"></ul>
+    </section>
+
+    <section>
+      <h2>Estoque</h2>
+      <button onclick="loadStock()">Carregar Estoque</button>
+      <ul id="stock"></ul>
+    </section>
+  </main>
+
+  <script>
+    async function loadItems() {
+      const res = await fetch('/api/items');
+      const data = await res.json();
+      document.getElementById('items').innerHTML = data.map(i => `<li>${i.name}</li>`).join('');
+    }
+
+    async function loadStock() {
+      const res = await fetch('/api/stock');
+      const data = await res.json();
+      document.getElementById('stock').innerHTML = data.map(s => `<li>${s.item}: ${s.qty}</li>`).join('');
+    }
+  </script>
+</body>
+</html>
